@@ -12,19 +12,19 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="CreateUser" component={CreateUser}></Stack.Screen>
-      <Stack.Screen name="UserList" component={UserList}></Stack.Screen>
-      <Stack.Screen name="UserDetail" component={UserDetailScreen}></Stack.Screen>
+      <Stack.Screen name="UserList" component={UserList} options={{ title: 'Lista de Usuarios' }}></Stack.Screen>
+      <Stack.Screen name="CreateUser" component={CreateUser} options={{ title: 'Crear Usuario' }}></Stack.Screen>
+      <Stack.Screen name="UserDetail" component={UserDetailScreen} options={{ title: 'Detalle de Usuarios' }}></Stack.Screen>
     </Stack.Navigator>
   )
 }
 
 export default function App() {
   return (
- 
-      <NavigationContainer>
-        <MyStack></MyStack>
-      </NavigationContainer>
+
+    <NavigationContainer>
+      <MyStack></MyStack>
+    </NavigationContainer>
 
   );
 }

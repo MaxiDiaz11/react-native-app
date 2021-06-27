@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Button, TextInput, ScrollView, StyleSheet } from "react-native";
 import firebase from "../database/firebase";
 
-const CreateUser = () => {
+const CreateUser = (props) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -19,22 +19,20 @@ const CreateUser = () => {
 
   const saveNewUser = async () => {
     if (user.name === "") {
-
       alert("Provee un nombre");
     } else {
-      await firebase.firestore().collection("users").add({
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-      });
-
-      alert("guardado");
+      try {
+        await firebase.db.collection("users").add({
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+        });
+        props.navigation.navigate("UserList");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-
-  firebase.auth().onAuthStateChanged(user=>{
-    console.log(user)
-  })
 
   return (
     <ScrollView style={styles.container}>
@@ -57,7 +55,11 @@ const CreateUser = () => {
         ></TextInput>
       </View>
       <View>
-        <Button title="Save User" onPress={() => saveNewUser()}></Button>
+        <Button
+          title="Save User"
+          style={styles.boton}
+          onPress={() => saveNewUser()}
+        ></Button>
       </View>
     </ScrollView>
   );
@@ -74,6 +76,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+  },
+  boton: {
+    flex: 0.3,
+    backgroundColor: "pink",
+    borderWidth: 5,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 });
 
